@@ -13,7 +13,7 @@
 
     using namespace std;
 
-    broker::TunnelManager::TunnelManager(char * nspaceL) {
+    broker::TunnelManager::TunnelManager(const char * nspaceL) {
         nspace = nspaceL;
     }
 

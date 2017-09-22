@@ -10,11 +10,11 @@ class broker {
     public:
         class TunnelManager {
             public:
-                TunnelManager(char * nspaceL);
+                TunnelManager(const char * nspaceL);
                 int initialize();
             private:
                 //Namespace is a taken var name in C++ so I use nspace isntead
-                char * nspace;
+                const char * nspace;
         };
 };
 

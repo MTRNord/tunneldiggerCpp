@@ -33,9 +33,9 @@ int main(int argc, char* argv[]) {
             /* We might have elevated privileges beyond that of the user who invoked
              * the program, due to suid bit. Be very careful about trusting any data! */
 
-             char * nspaceL = (char *) reader.Get("broker", "namespace", "l2tp");
+            string nspaceL = (char *) reader.Get("broker", "namespace", "l2tp");
 
-            broker::TunnelManager tunnelManager(nspaceL);
+            broker::TunnelManager tunnelManager(nspaceL.c_str());
             tunnelManager.initialize();
         } else {
             /* Anything goes. */
