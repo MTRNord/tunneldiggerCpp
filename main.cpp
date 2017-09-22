@@ -1,6 +1,5 @@
 #ifdef linux
     #include <unistd.h>
-    #include <libiptc/libiptc.h>
 #endif
 #include <iostream>
 
