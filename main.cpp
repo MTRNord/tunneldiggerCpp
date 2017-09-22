@@ -1,3 +1,6 @@
+#ifdef linux
+    #include <unistd.h>
+#endif
 #include <iostream>
 using namespace std;
 
@@ -10,10 +13,8 @@ int main() {
         } else {
             /* Anything goes. */
         }
-    #endif
-
-    #ifdef _WIN32
-        printf("You currently have to use Linux to run this. Windows support might eventually come in the future. :)\n");
+    #else
+        printf("You currently have to use Linux to run this. Other System support might eventually come in the future. :)\n");
     #endif
 
     return 0;
