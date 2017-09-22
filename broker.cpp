@@ -18,7 +18,7 @@
     }
 
     int broker::TunnelManager::initialize() {
-        printf("Prepare Routing");
+        std::cout << "Prepare Routing" << endl;
 
 
         string prerouting_chain = (string) "L2TP_PREROUTING_" + nspace;
