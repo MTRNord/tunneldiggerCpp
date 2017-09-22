@@ -2,9 +2,29 @@
     #include <unistd.h>
 #endif
 #include <iostream>
+#include "libs/INIReader.h"
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
+    string configFile= "../l2tp_broker.cfg.example";
+    if (argc > 1) {
+        if (string(argv[1]) != "") {
+            configFile = argv[1];
+        }else{
+            std::cout << "Using example config" << endl;
+        }
+    }else{
+        std::cout << "Using example config" << endl;
+    }
+    INIReader reader(configFile);
+
+    if (reader.ParseError() < 0) {
+        std::cout << "Can't load 'l2tp_broker.cfg.example'" << reader.ParseError() << endl;
+        return 1;
+    }
+    std::cout << "Config loaded from 'l2tp_broker.cfg.example': address="
+              << reader.Get("broker", "address", "UNKNOWN") << ", port="
+              << reader.Get("broker", "port", "UNKNOWN") << endl;
     #ifdef linux
         int uid=getuid(), euid=geteuid();
         if (uid<0 || uid!=euid) {
@@ -13,9 +33,9 @@ int main() {
         } else {
             /* Anything goes. */
         }
+        return 0;
     #else
         printf("You currently have to use Linux to run this. Other System support might eventually come in the future. :)\n");
+        return 1;
     #endif
-
-    return 0;
 }
