@@ -1,31 +1,32 @@
 #ifdef linux
     #include <unistd.h>
+    #include <libiptc/libiptc.h>
 #endif
 #include <iostream>
-#include "libs/INIReader.h"
+
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    string configFile= "../l2tp_broker.cfg.example";
-    if (argc > 1) {
-        if (string(argv[1]) != "") {
-            configFile = argv[1];
+    #ifdef linux
+        string configFile= "../l2tp_broker.cfg.example";
+        if (argc > 1) {
+            if (string(argv[1]) != "") {
+                configFile = argv[1];
+            }else{
+                std::cout << "Using example config" << endl;
+            }
         }else{
             std::cout << "Using example config" << endl;
         }
-    }else{
-        std::cout << "Using example config" << endl;
-    }
-    INIReader reader(configFile);
+        INIReader reader(configFile);
 
-    if (reader.ParseError() < 0) {
-        std::cout << "Can't load 'l2tp_broker.cfg.example'" << reader.ParseError() << endl;
-        return 1;
-    }
-    std::cout << "Config loaded from 'l2tp_broker.cfg.example': address="
-              << reader.Get("broker", "address", "UNKNOWN") << ", port="
-              << reader.Get("broker", "port", "UNKNOWN") << endl;
-    #ifdef linux
+        if (reader.ParseError() < 0) {
+            std::cout << "Can't load '"<< configFile << "'" << reader.ParseError() << endl;
+            return 1;
+        }
+        std::cout << "Config loaded from '"<< configFile << "': address="
+                  << reader.Get("broker", "address", "UNKNOWN") << ", port="
+                  << reader.Get("broker", "port", "UNKNOWN") << endl;
         int uid=getuid(), euid=geteuid();
         if (uid<0 || uid!=euid) {
             /* We might have elevated privileges beyond that of the user who invoked
@@ -35,7 +36,6 @@ int main(int argc, char* argv[]) {
         }
         return 0;
     #else
-        printf("You currently have to use Linux to run this. Other System support might eventually come in the future. :)\n");
-        return 1;
+        printf("You currently have to use Linux to run this. Other System support might eventually come in the future. :)\n");        return 1;
     #endif
 }
