@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) {
         std::cout << "Config loaded from '"<< configFile << "': address="
                   << reader.Get("broker", "address", "UNKNOWN") << ", port="
                   << reader.Get("broker", "port", "UNKNOWN") << endl;
-        int uid=getuid(), euid=geteuid();
-        if (uid<0 || uid!=euid) {
+        int uid=getuid();
+        if (uid == 0) {
             /* We might have elevated privileges beyond that of the user who invoked
              * the program, due to suid bit. Be very careful about trusting any data! */
 
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
             broker::TunnelManager tunnelManager(nspaceL.c_str());
             tunnelManager.initialize();
         } else {
-            /* Anything goes. */
+            std::cout << "Please run this as root" << endl;
         }
         return 0;
     #else

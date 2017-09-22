@@ -2,16 +2,12 @@
 // Created by marce on 22.09.2017.
 //
 
-#ifdef linux
+//#ifdef linux
     #include "broker.h"
     #include <iostream>
-    #include <sys/types.h>
-    #include <sys/wait.h>
-    #include <unistd.h>
-    #include <errno.h>
-    #include <stdlib.h>
+#include <sys/wait.h>
 
-    using namespace std;
+using namespace std;
 
     broker::TunnelManager::TunnelManager(const char * nspaceL) {
         nspace = nspaceL;
@@ -20,8 +16,9 @@
     int broker::TunnelManager::initialize() {
         printf("Prepare Routing");
 
-        char * prerouting_chain = (char *) printf("L2TP_PREROUTING_%s", nspace);
-        char * postrouting_chain  = (char *) printf("L2TP_POSTROUTING_%s", nspace);
+
+        string prerouting_chain = (string) "L2TP_PREROUTING_" + nspace;
+        string postrouting_chain  = (string) "L2TP_POSTROUTING_" + nspace;
 
         pid_t pid;
         int status;
@@ -55,4 +52,4 @@
 
         return 0;
     }
-#endif
+//#endif
