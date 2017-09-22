@@ -1,6 +1,7 @@
 #ifdef linux
     #include <unistd.h>
     #include "libs/INIReader.h"
+    #include "broker.h"
 #endif
 #include <iostream>
 
@@ -31,11 +32,15 @@ int main(int argc, char* argv[]) {
         if (uid<0 || uid!=euid) {
             /* We might have elevated privileges beyond that of the user who invoked
              * the program, due to suid bit. Be very careful about trusting any data! */
+
+            broker::TunnelManager tunnelManager(reader.Get("broker", "namespace", "l2tp"));
+            tunnelManager.initialize();
         } else {
             /* Anything goes. */
         }
         return 0;
     #else
-        printf("You currently have to use Linux to run this. Other System support might eventually come in the future. :)\n");        return 1;
+        printf("You currently have to use Linux to run this. Other System support might eventually come in the future. :)\n");
+        return 1;
     #endif
 }
