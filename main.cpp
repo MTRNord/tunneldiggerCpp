@@ -33,7 +33,9 @@ int main(int argc, char* argv[]) {
             /* We might have elevated privileges beyond that of the user who invoked
              * the program, due to suid bit. Be very careful about trusting any data! */
 
-            broker::TunnelManager tunnelManager(c_str(reader.Get("broker", "namespace", "l2tp")));
+             char * nspaceL = reader.Get("broker", "namespace", "l2tp");
+
+            broker::TunnelManager tunnelManager(nspaceL);
             tunnelManager.initialize();
         } else {
             /* Anything goes. */
@@ -41,6 +43,7 @@ int main(int argc, char* argv[]) {
         return 0;
     #else
         printf("You currently have to use Linux to run this. Other System support might eventually come in the future. :)\n");
+
         return 1;
     #endif
 }
