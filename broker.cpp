@@ -2,12 +2,16 @@
 // Created by marce on 22.09.2017.
 //
 
-//#ifdef linux
+#ifdef linux
     #include "broker.h"
     #include <iostream>
-#include <sys/wait.h>
+    #include <sys/types.h>
+    #include <sys/wait.h>
+    #include <unistd.h>
+    #include <errno.h>
+    #include <stdlib.h>
 
-using namespace std;
+    using namespace std;
 
     broker::TunnelManager::TunnelManager(const char * nspaceL) {
         nspace = nspaceL;
@@ -52,4 +56,4 @@ using namespace std;
 
         return 0;
     }
-//#endif
+#endif
