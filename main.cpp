@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
             /* We might have elevated privileges beyond that of the user who invoked
              * the program, due to suid bit. Be very careful about trusting any data! */
 
-            broker::TunnelManager tunnelManager(reader.Get("broker", "namespace", "l2tp"));
+            broker::TunnelManager tunnelManager(c_str(reader.Get("broker", "namespace", "l2tp")));
             tunnelManager.initialize();
         } else {
             /* Anything goes. */
